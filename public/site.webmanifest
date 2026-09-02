@@ -1,0 +1,10 @@
+{
+  "name": "Lente Viva",
+  "short_name": "Lente Viva",
+  "description": "Portfólio de fotografia de retrato, paisagem, eventos e editorial.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#121110",
+  "theme_color": "#121110",
+  "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}
