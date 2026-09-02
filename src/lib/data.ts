@@ -189,7 +189,7 @@ export const projects: Project[] = [
       { id: "1511795409834-ef04bbd61622", alt: "Alianças sobre a mesa de cerimônia" },
       { id: "1522673607200-164d1b6ce486", alt: "Noiva se arrumando antes da cerimônia" },
       { id: "1465495976277-4387d4b0b4c6", alt: "Convidados durante a recepção" },
-      { id: "1521543387599-3d0b6bd0f9c4", alt: "Pista de dança à noite" },
+      { id: "1470225620780-dba8ba36b745", alt: "Pista de dança à noite" },
       { id: "1550005809-91ad75fb315f", alt: "Detalhe da decoração da festa" },
     ],
   },
@@ -212,7 +212,7 @@ export const projects: Project[] = [
       { id: "1470229538611-16ba8c7ffbd7", alt: "Show ao ar livre com luzes coloridas" },
       { id: "1478146059778-26028b07395a", alt: "Plateia durante apresentação noturna" },
       { id: "1414235077428-338989a2e8c0", alt: "Palco iluminado à noite" },
-      { id: "1519167758481-83f29c1fe8ac", alt: "Multidão em festival ao ar livre" },
+      { id: "1492684223066-81342ee5ff30", alt: "Multidão em festival ao ar livre" },
     ],
   },
   {
