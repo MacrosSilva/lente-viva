@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { HeroLensScroll } from "@/components/site/hero-lens-scroll";
 import { Photo } from "@/components/site/photo";
 import { ProjectCard } from "@/components/site/project-card";
 import { Reveal } from "@/components/site/reveal";
@@ -25,46 +26,8 @@ const categoryCoverByCategory: Record<string, (typeof projects)[number]> = Objec
 export default function Home() {
   return (
     <main>
-      {/* Hero */}
-      <section className="relative flex h-dvh min-h-[640px] items-end overflow-hidden bg-ink">
-        <Photo
-          id="1500534623283-312aade485b7"
-          alt="Paisagem dramática ao entardecer"
-          sizes="100vw"
-          priority
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/40" />
-
-        <div className="relative mx-auto w-full max-w-6xl px-5 pb-20 pt-40 sm:px-8 sm:pb-28">
-          <Reveal>
-            <h1 className="max-w-2xl text-4xl font-semibold leading-[1.05] tracking-tighter text-white md:text-6xl">
-              Fotografia que respeita a luz do momento.
-            </h1>
-          </Reveal>
-          <Reveal delay={120}>
-            <p className="mt-5 max-w-md text-base leading-relaxed text-white/80">
-              Retratos, paisagens, eventos e editorial, sempre com atenção ao instante certo.
-            </p>
-          </Reveal>
-          <Reveal delay={220}>
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <Link
-                href="/trabalhos"
-                className="rounded-full bg-white px-6 py-3 text-sm font-medium text-ink transition-transform active:scale-[0.98] hover:-translate-y-0.5"
-              >
-                Ver trabalhos
-              </Link>
-              <Link
-                href="/contato"
-                className="rounded-full border border-white/50 px-6 py-3 text-sm font-medium text-white transition-colors hover:border-white hover:bg-white/10"
-              >
-                Fale comigo
-              </Link>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      {/* Hero — scroll-triggered lens dive into the portfolio */}
+      <HeroLensScroll />
 
       {/* Statement */}
       <section className="mx-auto max-w-3xl px-5 py-24 text-center sm:px-8 sm:py-32">
