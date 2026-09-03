@@ -51,6 +51,7 @@ export function HeroLensScroll() {
   const rings = useRef<HTMLDivElement>(null);
   const deck = useRef<HTMLDivElement>(null);
   const cam = useRef<HTMLDivElement>(null);
+  const camDark = useRef<HTMLDivElement>(null);
   const ring = useRef<HTMLDivElement>(null);
   const iris = useRef<HTMLDivElement>(null);
   const copy = useRef<HTMLDivElement>(null);
@@ -100,17 +101,19 @@ export function HeroLensScroll() {
 
       const c = cam.current;
       if (c) {
-        c.style.transformOrigin = "53% 52%";
         c.style.transform =
           `translate3d(${shake.toFixed(3)}px,${(shake * 0.6).toFixed(3)}px,0) ` +
           `scale(${camScale.toFixed(4)})`;
-        c.style.filter =
-          `brightness(${(1 - dive * 0.7).toFixed(3)}) ` +
-          `contrast(${(1 + dive * 0.4).toFixed(2)}) ` +
-          `saturate(${(1 - dive * 0.5).toFixed(2)}) ` +
-          `blur(${((1 - focus) * 3.4).toFixed(2)}px)`;
+        // Only the focus-rack blur runs as a CSS filter, and only while it is
+        // actually non-zero — a full-screen animated filter (esp. one that
+        // outlives beat 1) is the single most expensive thing on this page.
+        const blur = (1 - focus) * 3.4;
+        c.style.filter = blur > 0.04 ? `blur(${blur.toFixed(2)}px)` : "";
         c.style.opacity = (1 - smooth(seg(0.26, 0.52))).toFixed(3);
       }
+      // Dive darkening: a compositor-friendly opacity fade of a flat panel,
+      // instead of animating brightness/contrast/saturate on the image.
+      if (camDark.current) camDark.current.style.opacity = (dive * 0.72).toFixed(3);
 
       // Overlaid copy lives on beat 1 only — gone before the dive.
       const copyOut = smooth(seg(0.04, 0.2));
@@ -132,14 +135,19 @@ export function HeroLensScroll() {
       }
 
       // Beat 2 — the iris punches through.
-      const irisT = 1 - Math.pow(1 - seg(0.24, 0.56), 1.8);
       const ir = iris.current;
       if (ir) {
-        ir.style.opacity = (Math.min(1, seg(0.2, 0.26)) * (1 - seg(0.54, 0.62))).toFixed(3);
-        const size = 1100 + irisT * 3400;
-        ir.style.width = `${size.toFixed(2)}px`;
-        ir.style.height = `${size.toFixed(2)}px`;
-        ir.style.margin = `${(-size / 2).toFixed(2)}px 0 0 ${(-size / 2).toFixed(2)}px`;
+        const irisO = Math.min(1, seg(0.2, 0.26)) * (1 - seg(0.54, 0.62));
+        ir.style.opacity = irisO.toFixed(3);
+        // Skip the geometry writes entirely while the iris is invisible
+        // (~75% of the scroll).
+        if (irisO > 0.001) {
+          const irisT = 1 - Math.pow(1 - seg(0.24, 0.56), 1.8);
+          const size = 1100 + irisT * 3400;
+          ir.style.width = `${size.toFixed(2)}px`;
+          ir.style.height = `${size.toFixed(2)}px`;
+          ir.style.margin = `${(-size / 2).toFixed(2)}px 0 0 ${(-size / 2).toFixed(2)}px`;
+        }
       }
 
       // Beat 3 — tunnel, starfield, travelling cards. Overlaps beat 2 on
@@ -186,45 +194,51 @@ export function HeroLensScroll() {
       return () => ringEls.forEach((e) => e.remove());
     }
 
-    // Damped follow: the scene eases toward the scroll position instead of
-    // snapping to it. This lerp is what removes the sense of a cut — a raw
-    // scroll read here looks stepped.
+    // Damped follow, driven ONLY by a continuous rAF loop — never by the
+    // scroll event itself. Mouse-wheel scroll arrives in coarse ~100px steps;
+    // easing toward the target every frame at a fixed time-constant turns
+    // those steps into one continuous glide, identical on a trackpad, a wheel,
+    // or a flung scrollbar. The catch-up factor is normalised to elapsed time
+    // so 60Hz and 120Hz displays feel the same.
+    const TIME_CONSTANT_MS = 135;
     let sp: number | null = null;
     let last = -1;
     let frame = 0;
+    let prevT = 0;
 
-    const update = (fromScroll?: boolean) => {
+    const readRaw = () => {
       const rect = wrapEl.getBoundingClientRect();
       const vh = window.innerHeight || 800;
       const span = rect.height - vh;
-      let raw = span > 0 ? -rect.top / span : 0;
-      raw = clamp01(raw);
+      return clamp01(span > 0 ? -rect.top / span : 0);
+    };
+
+    const tick = (now: number) => {
+      frame = requestAnimationFrame(tick);
+      const dt = prevT ? Math.min(now - prevT, 64) : 16.7;
+      prevT = now;
+
+      const raw = readRaw();
       if (sp == null) sp = raw;
-      sp += (raw - sp) * (fromScroll ? 0.075 : 0.05);
-      if (Math.abs(raw - sp) < 0.00015) sp = raw;
+      const k = 1 - Math.exp(-dt / TIME_CONSTANT_MS);
+      sp += (raw - sp) * k;
+      if (Math.abs(raw - sp) < 0.0001) sp = raw;
+
       const p = sp;
-      if (Math.abs(p - last) < 0.00008) return;
+      if (Math.abs(p - last) < 0.00006) return;
       last = p;
       render(p);
     };
-
-    const tick = () => {
-      frame = requestAnimationFrame(tick);
-      update();
-    };
     frame = requestAnimationFrame(tick);
 
-    const onScroll = () => update(true);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    document.addEventListener("scroll", onScroll, { capture: true, passive: true });
-    window.addEventListener("resize", onScroll);
-    update();
+    const onResize = () => {
+      last = -1; // force a re-render at the new viewport size
+    };
+    window.addEventListener("resize", onResize);
 
     return () => {
       cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", onScroll);
-      document.removeEventListener("scroll", onScroll, { capture: true } as EventListenerOptions);
-      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("resize", onResize);
       ringEls.forEach((e) => e.remove());
     };
   }, []);
@@ -254,7 +268,10 @@ export function HeroLensScroll() {
             ref={rings}
             className="absolute inset-0 [transform-style:preserve-3d] [will-change:transform]"
           />
-          <div ref={deck} className="absolute inset-0 [transform-style:preserve-3d]">
+          <div
+            ref={deck}
+            className="absolute inset-0 [transform-style:preserve-3d] [will-change:transform]"
+          >
             {TUNNEL_PHOTOS.map((ph, i) => (
               <div
                 key={ph.id}
@@ -289,7 +306,11 @@ export function HeroLensScroll() {
         </div>
 
         {/* Camera layer */}
-        <div ref={cam} className="absolute inset-0 [will-change:transform]">
+        <div
+          ref={cam}
+          className="absolute inset-0 [will-change:transform]"
+          style={{ transformOrigin: "53% 52%" }}
+        >
           <Image
             src="/hero/camera.png"
             alt=""
@@ -305,6 +326,11 @@ export function HeroLensScroll() {
               background:
                 "radial-gradient(circle at 53% 52%, rgba(0,0,0,0) 8%, rgba(4,5,9,.35) 45%, rgba(4,5,9,.9) 85%)",
             }}
+          />
+          {/* Dive darkening panel — opacity-driven, GPU-cheap */}
+          <div
+            ref={camDark}
+            className="absolute inset-0 bg-[#05060a] opacity-0 [will-change:opacity]"
           />
         </div>
 
