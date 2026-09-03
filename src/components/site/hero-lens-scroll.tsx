@@ -194,13 +194,12 @@ export function HeroLensScroll() {
       return () => ringEls.forEach((e) => e.remove());
     }
 
-    // Damped follow, driven ONLY by a continuous rAF loop — never by the
-    // scroll event itself. Mouse-wheel scroll arrives in coarse ~100px steps;
-    // easing toward the target every frame at a fixed time-constant turns
-    // those steps into one continuous glide, identical on a trackpad, a wheel,
-    // or a flung scrollbar. The catch-up factor is normalised to elapsed time
-    // so 60Hz and 120Hz displays feel the same.
-    const TIME_CONSTANT_MS = 135;
+    // Light denoising follow, driven ONLY by a continuous rAF loop — never by
+    // the scroll event itself. Site-wide smooth scroll (Lenis) already eases
+    // the underlying scroll position, so this only needs to take the last
+    // edge off; a large time-constant here would compound into visible lag.
+    // The factor is normalised to elapsed time so 60Hz and 120Hz match.
+    const TIME_CONSTANT_MS = 45;
     let sp: number | null = null;
     let last = -1;
     let frame = 0;

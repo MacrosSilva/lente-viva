@@ -1,5 +1,6 @@
 "use client";
 
+import { useLenis } from "lenis/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -20,6 +21,7 @@ export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
   const overHero = useOverHero(pathname === "/");
+  const lenis = useLenis();
 
   useEffect(() => {
     setMenuOpen(false);
@@ -33,11 +35,13 @@ export function Navbar() {
     document.addEventListener("keydown", onKey);
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    lenis?.stop();
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = previousOverflow;
+      lenis?.start();
     };
-  }, [menuOpen]);
+  }, [menuOpen, lenis]);
 
   const solid = (scrolled && !overHero) || menuOpen;
 

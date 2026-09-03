@@ -3,6 +3,7 @@ import { IBM_Plex_Mono, Outfit } from "next/font/google";
 
 import { Footer } from "@/components/site/footer";
 import { Navbar } from "@/components/site/navbar";
+import { SmoothScroll } from "@/components/site/smooth-scroll";
 import { getSiteUrl } from "@/lib/site-url";
 import { THEME_BOOTSTRAP_SCRIPT } from "@/lib/use-theme";
 import "./globals.css";
@@ -54,9 +55,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: THEME_BOOTSTRAP_SCRIPT }} />
       </head>
       <body className="bg-paper text-ink">
-        <Navbar />
-        {children}
-        <Footer />
+        <SmoothScroll>
+          <Navbar />
+          {children}
+          <Footer />
+        </SmoothScroll>
       </body>
     </html>
   );
