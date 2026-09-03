@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { useOverHero } from "@/lib/use-over-hero";
 import { useScrolled } from "@/lib/use-scrolled";
 import { LogoMark } from "./logo-mark";
 import { ThemeToggle } from "./theme-toggle";
@@ -18,6 +19,7 @@ export function Navbar() {
   const scrolled = useScrolled(40);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
+  const overHero = useOverHero(pathname === "/");
 
   useEffect(() => {
     setMenuOpen(false);
@@ -37,7 +39,7 @@ export function Navbar() {
     };
   }, [menuOpen]);
 
-  const solid = scrolled || menuOpen;
+  const solid = (scrolled && !overHero) || menuOpen;
 
   return (
     <header
