@@ -15,7 +15,7 @@ export function PaperHero({ photo, title, lead, meta }: PaperHeroProps) {
   return (
     <section className="grid gap-[var(--margin)] px-[var(--margin)] lg:grid-cols-2">
       <div className="relative order-2 flex flex-col justify-end bg-surface px-6 py-12 sm:px-12 sm:py-16 lg:order-1 lg:min-h-[78svh]">
-        <h1 className="pf-reveal font-display text-[clamp(3rem,1rem+5vw,6.5rem)]">{title}</h1>
+        <h1 className="pf-reveal font-display text-[length:var(--step-head)] lg:text-[clamp(3rem,1rem+4vw,6rem)]">{title}</h1>
         <p className="pf-reveal mt-8 max-w-[40ch] text-[length:var(--step-lead)] leading-[1.4]" style={{ animationDelay: "120ms" }}>
           {lead}
         </p>
