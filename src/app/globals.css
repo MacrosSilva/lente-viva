@@ -1,70 +1,127 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
-
+/* Lente Viva — the site is a photographer's contact sheet: paper panels on a
+   slate ground, two inks (near-black and olive), photographs as tipped-in plates. */
 :root {
-  --pf-paper: #faf9f7;
-  --pf-paper-soft: #f0efec;
-  --pf-ink: #171614;
-  --pf-ink-soft: #57544d;
-  --pf-line: #dedad3;
-  --pf-line-strong: #b9b4aa;
-  --pf-overlay: rgb(23 22 20 / 55%);
+  --bg: #a6b3bc;
+  --surface: #b2bdc5;
+  --paper: #ecebe8;
+  --paper-2: #dcdbd6;
+  --ink: #1c1c1c;
+  --muted: #38424a;
+  --accent: #2c3620;
+  --accent-ink: #e3e2da;
+  --field-1: #a6b3bc;
+  --field-2: #b7c8be;
+  --field-3: #d6c4b8;
+  --field-4: #2c3620;
+  --field-4-ink: #e3e2da;
+
+  --step-small: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+  --step-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --step-lead: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
+  --step-head: clamp(2rem, 1.3rem + 3.2vw, 4rem);
+  --step-display: clamp(3.5rem, 1.6rem + 5.6vw, 5.5rem);
+
+  --margin: clamp(16px, 2.2vw, 32px);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   color-scheme: light;
 }
 
-.dark {
-  --pf-paper: #121110;
-  --pf-paper-soft: #1b1a18;
-  --pf-ink: #f3f1ec;
-  --pf-ink-soft: #a8a49b;
-  --pf-line: #302e2a;
-  --pf-line-strong: #47443e;
-  --pf-overlay: rgb(0 0 0 / 65%);
-  color-scheme: dark;
-}
-
 @theme inline {
-  --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-ibm-plex-mono), ui-monospace, "SFMono-Regular", monospace;
+  --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-bodoni), "Bodoni 72", Didot, serif;
 
-  --color-paper: var(--pf-paper);
-  --color-paper-soft: var(--pf-paper-soft);
-  --color-ink: var(--pf-ink);
-  --color-ink-soft: var(--pf-ink-soft);
-  --color-line: var(--pf-line);
-  --color-line-strong: var(--pf-line-strong);
-  --color-overlay: var(--pf-overlay);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-field-1: var(--field-1);
+  --color-field-2: var(--field-2);
+  --color-field-3: var(--field-3);
+  --color-field-4: var(--field-4);
+  --color-field-4-ink: var(--field-4-ink);
 }
 
 html {
-  background-color: var(--pf-paper);
-  color: var(--pf-ink);
+  background-color: var(--bg);
+  color: var(--ink);
 }
 
 body {
-  min-height: 100vh;
-  background-color: var(--pf-paper);
-  color: var(--pf-ink);
+  min-height: 100svh;
+  background-color: var(--bg);
+  color: var(--ink);
   font-family: var(--font-sans);
+  font-size: var(--step-body);
+  line-height: 1.6;
+  letter-spacing: 0.01em;
   -webkit-font-smoothing: antialiased;
 }
 
-* {
-  border-color: var(--pf-line);
+.font-display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-optical-sizing: auto;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+}
+
+.wrap {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1440px;
+  padding-inline: var(--margin);
 }
 
 ::selection {
-  background-color: var(--pf-ink);
-  color: var(--pf-paper);
+  background-color: var(--accent);
+  color: var(--accent-ink);
 }
 
-.no-scrollbar {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
 }
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
+
+/* Paper card with scalloped inner corners, the way a printed card is die-cut.
+   The mask is a shape tool, not a colour fill. */
+.die-cut {
+  --r: 22px;
+  mask:
+    radial-gradient(circle var(--r) at 0 0, #0000 98%, #000) top left, /* taste-skill-ignore: shape mask, not a colour fill */
+    radial-gradient(circle var(--r) at 100% 0, #0000 98%, #000) top right, /* taste-skill-ignore: shape mask, not a colour fill */
+    radial-gradient(circle var(--r) at 0 100%, #0000 98%, #000) bottom left, /* taste-skill-ignore: shape mask, not a colour fill */
+    radial-gradient(circle var(--r) at 100% 100%, #0000 98%, #000) bottom right; /* taste-skill-ignore: shape mask, not a colour fill */
+  mask-size: 51% 51%;
+  mask-repeat: no-repeat;
+}
+
+/* A row of round perforation dots, drawn as real dots (5px). */
+.perf-x {
+  height: 5px;
+  background: radial-gradient(circle, var(--dot, var(--bg)) 2.5px, transparent 3px) 0 0 / 14px 5px repeat-x; /* taste-skill-ignore: shape mask, not a colour fill */
+}
+.perf-y {
+  width: 5px;
+  background: radial-gradient(circle, var(--dot, var(--bg)) 2.5px, transparent 3px) 0 0 / 5px 14px repeat-y; /* taste-skill-ignore: shape mask, not a colour fill */
+}
+
+/* Section-part entrance: heading, then text, then picture. Content is visible
+   by default; the script only adds .is-armed once it can play it back. */
+.rise {
+  transition:
+    opacity 0.8s var(--ease-out),
+    transform 0.8s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 75ms);
+}
+.is-armed .rise:not(.is-in) {
+  opacity: 0;
+  transform: translateY(24px);
 }
 
 @keyframes pf-fade-up {
@@ -79,14 +136,36 @@ body {
 }
 
 .pf-reveal {
-  animation: pf-fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: pf-fade-up 0.7s var(--ease-out) both;
+}
+
+@keyframes drift {
+  from {
+    transform: scale(1.04) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.1) translate3d(-1.5%, -1%, 0);
+  }
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pf-reveal {
-    animation-duration: 0.01ms !important;
+  footer.curtain {
+    position: relative;
   }
-  * {
+  .is-armed .rise:not(.is-in) {
+    opacity: 1;
+    transform: none;
+  }
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

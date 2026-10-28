@@ -22,6 +22,9 @@ export type Project = {
   summary: string;
   description: string[];
   camera: string;
+  // The hour of the light the series was made in, "HHhMM", and a short note on that light.
+  hour: string;
+  light: string;
   cover: ProjectImage;
   images: ProjectImage[];
 };
@@ -68,6 +71,8 @@ export const projects: Project[] = [
       "O resultado é uma coleção de rostos suavizados por um único tom de luz, quase sempre dourado, quase sempre passageiro.",
     ],
     camera: "Câmera de corpo inteiro, lente 85mm f/1.4",
+    hour: "17h30",
+    light: "Fim de tarde, sol baixo e dourado",
     cover: { id: "1544005313-94ddf0286df2", alt: "Retrato feminino em luz dourada" },
     images: [
       { id: "1544005313-94ddf0286df2", alt: "Retrato feminino em luz dourada" },
@@ -91,6 +96,8 @@ export const projects: Project[] = [
       "A série reúne doze retratos de pessoas da cidade que abriram sua rotina para uma tarde de estúdio.",
     ],
     camera: "Câmera de corpo inteiro, lente 50mm f/1.2",
+    hour: "14h00",
+    light: "Estúdio, uma única luz lateral dura",
     cover: { id: "1531123897727-8f129e1688ce", alt: "Retrato masculino em preto e branco" },
     images: [
       { id: "1531123897727-8f129e1688ce", alt: "Retrato masculino em preto e branco" },
@@ -115,6 +122,8 @@ export const projects: Project[] = [
       "O objetivo não era documentar um lugar, mas registrar a sensação de estar pequeno diante dele.",
     ],
     camera: "Câmera de corpo inteiro, lente 24-70mm f/2.8",
+    hour: "05h40",
+    light: "Névoa antes do sol passar a serra",
     cover: { id: "1506905925346-21bda4d32df4", alt: "Montanhas cobertas de névoa ao amanhecer" },
     images: [
       { id: "1506905925346-21bda4d32df4", alt: "Montanhas cobertas de névoa ao amanhecer" },
@@ -138,6 +147,8 @@ export const projects: Project[] = [
       "Nenhuma imagem foi feita com o barco parado: todo o trabalho aconteceu em movimento, à mão.",
     ],
     camera: "Câmera de corpo inteiro, lente 70-200mm f/2.8",
+    hour: "16h50",
+    light: "Contraluz sobre o mar aberto",
     cover: { id: "1472214103451-9374bd1c798e", alt: "Costão rochoso e mar ao entardecer" },
     images: [
       { id: "1472214103451-9374bd1c798e", alt: "Costão rochoso e mar ao entardecer" },
@@ -161,6 +172,8 @@ export const projects: Project[] = [
       "A série termina com a única imagem feita ao meio-dia, como contraponto ao resto do trabalho.",
     ],
     camera: "Câmera de corpo inteiro, lente 16-35mm f/2.8",
+    hour: "05h55",
+    light: "Luz rasante sobre o capim seco",
     cover: { id: "1447752875215-b2761acb3c5d", alt: "Amanhecer sobre vegetação do cerrado" },
     images: [
       { id: "1447752875215-b2761acb3c5d", alt: "Amanhecer sobre vegetação do cerrado" },
@@ -183,6 +196,8 @@ export const projects: Project[] = [
       "Esta seleção reúne dezoito imagens de um dia de doze horas de trabalho contínuo.",
     ],
     camera: "Duas câmeras de corpo inteiro, lentes 35mm e 85mm",
+    hour: "07h00",
+    light: "Do café da manhã à última dança",
     cover: { id: "1519741497674-611481863552", alt: "Noivos durante a cerimônia ao ar livre" },
     images: [
       { id: "1519741497674-611481863552", alt: "Noivos durante a cerimônia ao ar livre" },
@@ -207,6 +222,8 @@ export const projects: Project[] = [
       "A seleção final privilegia o público tanto quanto os artistas: a festa é sempre coletiva.",
     ],
     camera: "Câmera de corpo inteiro, lente 24-70mm f/2.8",
+    hour: "21h00",
+    light: "Luz de palco em movimento",
     cover: { id: "1470229538611-16ba8c7ffbd7", alt: "Show ao ar livre com luzes coloridas" },
     images: [
       { id: "1470229538611-16ba8c7ffbd7", alt: "Show ao ar livre com luzes coloridas" },
@@ -229,6 +246,8 @@ export const projects: Project[] = [
       "O editorial foi entregue em quarenta e oito horas, do briefing à entrega final em alta resolução.",
     ],
     camera: "Câmera de corpo inteiro, lente 50mm f/1.2",
+    hour: "12h00",
+    light: "Sol a pino na laje, sombra dura",
     cover: { id: "1483985988355-763728e1935b", alt: "Modelo em editorial de moda de verão" },
     images: [
       { id: "1483985988355-763728e1935b", alt: "Modelo em editorial de moda de verão" },
@@ -252,6 +271,8 @@ export const projects: Project[] = [
       "O texto que acompanha o ensaio na publicação original foi escrito a partir dessas conversas.",
     ],
     camera: "Câmera de corpo inteiro, lente 35mm f/1.4",
+    hour: "08h20",
+    light: "Manhã cedo no centro da cidade",
     cover: { id: "1509631179647-0177331693ae", alt: "Retrato urbano em luz de rua" },
     images: [
       { id: "1509631179647-0177331693ae", alt: "Retrato urbano em luz de rua" },

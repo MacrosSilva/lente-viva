@@ -1,23 +1,25 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Mono, Outfit } from "next/font/google";
+import { Bodoni_Moda, Jost } from "next/font/google";
 
 import { Footer } from "@/components/site/footer";
 import { Navbar } from "@/components/site/navbar";
 import { getSiteUrl } from "@/lib/site-url";
-import { THEME_BOOTSTRAP_SCRIPT } from "@/lib/use-theme";
+import { CurtainReveal } from "@/components/site/curtain-reveal";
+import { RiseObserver } from "@/components/site/rise-observer";
 import "./globals.css";
 
-const outfit = Outfit({
+const bodoni = Bodoni_Moda({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-outfit",
+  weight: ["500"],
+  style: ["normal", "italic"],
+  variable: "--font-bodoni",
   display: "swap",
 });
 
-const ibmPlexMono = IBM_Plex_Mono({
+const jost = Jost({
   subsets: ["latin"],
   weight: ["400", "500"],
-  variable: "--font-ibm-plex-mono",
+  variable: "--font-jost",
   display: "swap",
 });
 
@@ -40,23 +42,20 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#121110",
+  themeColor: "#a6b3bc",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    // No className on <html> on purpose: the blocking bootstrap script below
-    // sets `.dark` on the real DOM before first paint. If React also asserted
-    // a class here, hydration would fight the script's correction and cause a
-    // flash. suppressHydrationWarning covers the attribute React doesn't own.
-    <html lang="pt-BR" suppressHydrationWarning className={`${outfit.variable} ${ibmPlexMono.variable}`}>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: THEME_BOOTSTRAP_SCRIPT }} />
-      </head>
-      <body className="bg-paper text-ink">
-        <Navbar />
-        {children}
+    <html lang="pt-BR" className={`${bodoni.variable} ${jost.variable}`}>
+      <body>
+        <div data-curtain className="relative z-10 bg-bg">
+          <Navbar />
+          {children}
+        </div>
         <Footer />
+        <RiseObserver />
+        <CurtainReveal />
       </body>
     </html>
   );
