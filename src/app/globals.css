@@ -3,34 +3,37 @@
 /* Lente Viva — the site is a photographer's contact sheet: paper panels on a
    slate ground, two inks (near-black and olive), photographs as tipped-in plates. */
 :root {
-  --bg: #a6b3bc;
-  --surface: #b2bdc5;
-  --paper: #ecebe8;
-  --paper-2: #dcdbd6;
-  --ink: #1c1c1c;
-  --muted: #38424a;
-  --accent: #2c3620;
-  --accent-ink: #e3e2da;
-  --field-1: #a6b3bc;
-  --field-2: #b7c8be;
-  --field-3: #d6c4b8;
-  --field-4: #2c3620;
-  --field-4-ink: #e3e2da;
+  /* Olive on bone: one ink for every word, photographs supply the rest. */
+  --bg: #ecebe7;
+  --surface: #e1dfd9;
+  --ink: #38450f;
+  --muted: #5d683a;
+  --accent: #38450f;
+  --accent-ink: #ecebe7;
+  --field-1: #38450f;
+  --field-1-ink: #ecebe7;
+  /* aliases kept for the inner pages */
+  --paper: #e1dfd9;
+  --paper-2: #d5d3cb;
+  --field-2: #e1dfd9;
+  --field-3: #e1dfd9;
+  --field-4: #38450f;
+  --field-4-ink: #ecebe7;
 
-  --step-small: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+  --step-small: clamp(0.875rem, 0.84rem + 0.1vw, 0.9375rem);
   --step-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
   --step-lead: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
-  --step-head: clamp(2rem, 1.3rem + 3.2vw, 4rem);
-  --step-display: clamp(3.5rem, 1.6rem + 5.6vw, 5.5rem);
+  --step-head: clamp(2.5rem, 1.6rem + 3.4vw, 4.5rem);
+  --step-display: clamp(3rem, 1rem + 9vw, 10rem);
 
-  --margin: clamp(16px, 2.2vw, 32px);
+  --margin: clamp(16px, 1.8vw, 28px);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   color-scheme: light;
 }
 
 @theme inline {
-  --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-bodoni), "Bodoni 72", Didot, serif;
+  --font-sans: var(--font-literata), Georgia, serif;
+  --font-display: var(--font-rokkitt), "Rockwell", serif;
 
   --color-bg: var(--bg);
   --color-surface: var(--surface);
@@ -45,6 +48,7 @@
   --color-field-3: var(--field-3);
   --color-field-4: var(--field-4);
   --color-field-4-ink: var(--field-4-ink);
+  --color-field-1-ink: var(--field-1-ink);
 }
 
 html {
@@ -59,16 +63,15 @@ body {
   font-family: var(--font-sans);
   font-size: var(--step-body);
   line-height: 1.6;
-  letter-spacing: 0.01em;
   -webkit-font-smoothing: antialiased;
 }
 
 .font-display {
   font-family: var(--font-display);
-  font-weight: 500;
-  font-optical-sizing: auto;
-  letter-spacing: -0.02em;
-  line-height: 0.95;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 0.85;
 }
 
 .wrap {
@@ -86,29 +89,6 @@ body {
 :focus-visible {
   outline: 3px solid var(--accent);
   outline-offset: 3px;
-}
-
-/* Paper card with scalloped inner corners, the way a printed card is die-cut.
-   The mask is a shape tool, not a colour fill. */
-.die-cut {
-  --r: 22px;
-  mask:
-    radial-gradient(circle var(--r) at 0 0, #0000 98%, #000) top left, /* taste-skill-ignore: shape mask, not a colour fill */
-    radial-gradient(circle var(--r) at 100% 0, #0000 98%, #000) top right, /* taste-skill-ignore: shape mask, not a colour fill */
-    radial-gradient(circle var(--r) at 0 100%, #0000 98%, #000) bottom left, /* taste-skill-ignore: shape mask, not a colour fill */
-    radial-gradient(circle var(--r) at 100% 100%, #0000 98%, #000) bottom right; /* taste-skill-ignore: shape mask, not a colour fill */
-  mask-size: 51% 51%;
-  mask-repeat: no-repeat;
-}
-
-/* A row of round perforation dots, drawn as real dots (5px). */
-.perf-x {
-  height: 5px;
-  background: radial-gradient(circle, var(--dot, var(--bg)) 2.5px, transparent 3px) 0 0 / 14px 5px repeat-x; /* taste-skill-ignore: shape mask, not a colour fill */
-}
-.perf-y {
-  width: 5px;
-  background: radial-gradient(circle, var(--dot, var(--bg)) 2.5px, transparent 3px) 0 0 / 5px 14px repeat-y; /* taste-skill-ignore: shape mask, not a colour fill */
 }
 
 /* Section-part entrance: heading, then text, then picture. Content is visible

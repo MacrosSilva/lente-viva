@@ -41,9 +41,9 @@ export default function ContatoPage() {
 
       <section aria-labelledby="pedido" className="py-[clamp(80px,10vw,160px)]">
         <div className="wrap grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-4">
+          <div className="lg:col-span-5">
             <h2 id="pedido" className="rise font-display text-[length:var(--step-head)]">
-              Como falar comigo
+              Fale comigo
             </h2>
             <dl className="rise mt-10 space-y-6" style={{ ["--i" as string]: 1 }}>
               {INFO.map((item) => (
@@ -55,7 +55,7 @@ export default function ContatoPage() {
             </dl>
           </div>
 
-          <div className="rise bg-field-2 p-6 sm:p-10 lg:col-span-7 lg:col-start-6" style={{ ["--i" as string]: 2 }}>
+          <div className="rise bg-field-2 p-6 sm:p-10 lg:col-span-6 lg:col-start-7" style={{ ["--i" as string]: 2 }}>
             <ContactForm />
           </div>
         </div>

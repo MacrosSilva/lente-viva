@@ -59,7 +59,7 @@ export default function SobrePage() {
             </p>
             <Link
               href="/contato"
-              className="rise mt-10 inline-flex h-11 items-center bg-ink px-6 text-[length:var(--step-small)] font-medium text-paper transition-[background-color,transform] hover:bg-accent active:scale-[0.97]"
+              className="rise mt-10 inline-flex h-11 items-center bg-ink px-6 text-[length:var(--step-small)] font-semibold text-bg transition-[background-color,transform] hover:bg-[#2b350b] active:scale-[0.97]"
               style={{ ["--i" as string]: 3 }}
             >
               Reservar uma sessão

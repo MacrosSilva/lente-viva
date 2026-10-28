@@ -1,25 +1,24 @@
 import type { Metadata, Viewport } from "next";
-import { Bodoni_Moda, Jost } from "next/font/google";
+import { Literata, Rokkitt } from "next/font/google";
 
 import { Footer } from "@/components/site/footer";
 import { Navbar } from "@/components/site/navbar";
 import { getSiteUrl } from "@/lib/site-url";
-import { CurtainReveal } from "@/components/site/curtain-reveal";
 import { RiseObserver } from "@/components/site/rise-observer";
 import "./globals.css";
 
-const bodoni = Bodoni_Moda({
+const rokkitt = Rokkitt({
   subsets: ["latin"],
-  weight: ["500"],
-  style: ["normal", "italic"],
-  variable: "--font-bodoni",
+  weight: ["800"],
+  variable: "--font-rokkitt",
   display: "swap",
 });
 
-const jost = Jost({
+const literata = Literata({
   subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-jost",
+  weight: ["400", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-literata",
   display: "swap",
 });
 
@@ -42,20 +41,19 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#a6b3bc",
+  themeColor: "#ecebe7",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className={`${bodoni.variable} ${jost.variable}`}>
+    <html lang="pt-BR" className={`${rokkitt.variable} ${literata.variable}`}>
       <body>
-        <div data-curtain className="relative z-10 bg-bg">
+        <div className="bg-bg">
           <Navbar />
           {children}
         </div>
         <Footer />
         <RiseObserver />
-        <CurtainReveal />
       </body>
     </html>
   );

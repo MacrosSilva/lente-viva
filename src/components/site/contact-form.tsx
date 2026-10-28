@@ -42,7 +42,7 @@ export function ContactForm() {
   if (status === "success") {
     return (
       <div className="bg-paper px-6 py-10 text-center" role="status">
-        <p className="font-display text-[length:var(--step-lead)] italic">Mensagem enviada.</p>
+        <p className="font-display text-[length:var(--step-lead)]">Mensagem enviada.</p>
         <p className="mt-2">
           Obrigado pelo contato. Normalmente respondo em até dois dias úteis.
         </p>
@@ -172,7 +172,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="inline-flex h-14 items-center bg-ink px-8 font-medium text-paper transition-[transform,background-color] hover:bg-accent active:scale-[0.98] disabled:opacity-60"
+        className="inline-flex h-14 items-center bg-ink px-8 font-semibold text-bg transition-[transform,background-color] hover:bg-[#2b350b] active:scale-[0.98] disabled:opacity-60"
       >
         {status === "submitting" ? "Enviando…" : "Enviar mensagem"}
       </button>

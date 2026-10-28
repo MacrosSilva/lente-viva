@@ -25,7 +25,7 @@ export function ContactStrip({ slugs, heading }: { slugs: string[]; heading: str
                     className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                   />
                 </div>
-                <p className="mt-2 text-[length:var(--step-small)] text-paper">
+                <p className="mt-2 text-[length:var(--step-small)] text-bg">
                   {p.hour}, {p.title}
                 </p>
               </Link>
