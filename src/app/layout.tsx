@@ -1,23 +1,24 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Mono, Outfit } from "next/font/google";
+import { Literata, Rokkitt } from "next/font/google";
 
 import { Footer } from "@/components/site/footer";
 import { Navbar } from "@/components/site/navbar";
 import { getSiteUrl } from "@/lib/site-url";
-import { THEME_BOOTSTRAP_SCRIPT } from "@/lib/use-theme";
+import { RiseObserver } from "@/components/site/rise-observer";
 import "./globals.css";
 
-const outfit = Outfit({
+const rokkitt = Rokkitt({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-outfit",
+  weight: ["800"],
+  variable: "--font-rokkitt",
   display: "swap",
 });
 
-const ibmPlexMono = IBM_Plex_Mono({
+const literata = Literata({
   subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-ibm-plex-mono",
+  weight: ["400", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-literata",
   display: "swap",
 });
 
@@ -40,23 +41,19 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#121110",
+  themeColor: "#ecebe7",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    // No className on <html> on purpose: the blocking bootstrap script below
-    // sets `.dark` on the real DOM before first paint. If React also asserted
-    // a class here, hydration would fight the script's correction and cause a
-    // flash. suppressHydrationWarning covers the attribute React doesn't own.
-    <html lang="pt-BR" suppressHydrationWarning className={`${outfit.variable} ${ibmPlexMono.variable}`}>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: THEME_BOOTSTRAP_SCRIPT }} />
-      </head>
-      <body className="bg-paper text-ink">
-        <Navbar />
-        {children}
+    <html lang="pt-BR" className={`${rokkitt.variable} ${literata.variable}`}>
+      <body>
+        <div className="bg-bg">
+          <Navbar />
+          {children}
+        </div>
         <Footer />
+        <RiseObserver />
       </body>
     </html>
   );

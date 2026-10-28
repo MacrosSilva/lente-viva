@@ -58,14 +58,14 @@ export function Lightbox({ images, index, onClose, onIndexChange }: LightboxProp
       }}
     >
       <div className="flex items-center justify-between px-4 py-4 sm:px-8">
-        <p className="font-mono text-xs uppercase tracking-[0.14em] text-white/70">
-          {index + 1} / {total}
+        <p className="text-[length:var(--step-small)] text-white/80">
+          Foto {index + 1} de {total}
         </p>
         <button
           type="button"
           onClick={onClose}
           aria-label="Fechar galeria"
-          className="flex h-10 w-10 items-center justify-center rounded-full text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+          className="flex h-10 w-10 items-center justify-center text-white/80 transition-colors hover:bg-white/10 hover:text-white"
         >
           <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6">
             <path strokeLinecap="round" d="M6 6l12 12M18 6 6 18" />
@@ -78,7 +78,7 @@ export function Lightbox({ images, index, onClose, onIndexChange }: LightboxProp
           type="button"
           onClick={goPrev}
           aria-label="Foto anterior"
-          className="absolute left-1 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white sm:left-4"
+          className="absolute left-1 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center text-white/70 transition-colors hover:bg-white/10 hover:text-white sm:left-4"
         >
           <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.6">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 5 8 12l7 7" />
@@ -99,7 +99,7 @@ export function Lightbox({ images, index, onClose, onIndexChange }: LightboxProp
           type="button"
           onClick={goNext}
           aria-label="Próxima foto"
-          className="absolute right-1 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white sm:right-4"
+          className="absolute right-1 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center text-white/70 transition-colors hover:bg-white/10 hover:text-white sm:right-4"
         >
           <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.6">
             <path strokeLinecap="round" strokeLinejoin="round" d="m9 5 7 7-7 7" />
@@ -107,7 +107,7 @@ export function Lightbox({ images, index, onClose, onIndexChange }: LightboxProp
         </button>
       </div>
 
-      <p className="px-4 pb-6 text-center text-sm text-white/60 sm:px-8">{current.alt}</p>
+      <p className="px-4 pb-6 text-center text-[length:var(--step-small)] text-white/75 sm:px-8">{current.alt}</p>
 
       <div className="no-scrollbar flex gap-2 overflow-x-auto px-4 pb-5 sm:px-8">
         {images.map((image, i) => (
@@ -117,8 +117,8 @@ export function Lightbox({ images, index, onClose, onIndexChange }: LightboxProp
             onClick={() => onIndexChange(i)}
             aria-label={`Ir para foto ${i + 1}`}
             aria-current={i === index}
-            className={`h-12 w-16 flex-shrink-0 overflow-hidden rounded transition-opacity ${
-              i === index ? "opacity-100 ring-1 ring-white" : "opacity-40 hover:opacity-70"
+            className={`h-12 w-16 flex-shrink-0 overflow-hidden transition-opacity ${
+              i === index ? "opacity-100 outline outline-2 outline-white" : "opacity-40 hover:opacity-70"
             }`}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}

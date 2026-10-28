@@ -1,70 +1,107 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
-
+/* Lente Viva — the site is a photographer's contact sheet: paper panels on a
+   slate ground, two inks (near-black and olive), photographs as tipped-in plates. */
 :root {
-  --pf-paper: #faf9f7;
-  --pf-paper-soft: #f0efec;
-  --pf-ink: #171614;
-  --pf-ink-soft: #57544d;
-  --pf-line: #dedad3;
-  --pf-line-strong: #b9b4aa;
-  --pf-overlay: rgb(23 22 20 / 55%);
+  /* Olive on bone: one ink for every word, photographs supply the rest. */
+  --bg: #ecebe7;
+  --surface: #e1dfd9;
+  --ink: #38450f;
+  --muted: #5d683a;
+  --accent: #38450f;
+  --accent-ink: #ecebe7;
+  --field-1: #38450f;
+  --field-1-ink: #ecebe7;
+  /* aliases kept for the inner pages */
+  --paper: #e1dfd9;
+  --paper-2: #d5d3cb;
+  --field-2: #e1dfd9;
+  --field-3: #e1dfd9;
+  --field-4: #38450f;
+  --field-4-ink: #ecebe7;
+
+  --step-small: clamp(0.875rem, 0.84rem + 0.1vw, 0.9375rem);
+  --step-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --step-lead: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
+  --step-head: clamp(2.5rem, 1.6rem + 3.4vw, 4.5rem);
+  --step-display: clamp(3rem, 1rem + 9vw, 10rem);
+
+  --margin: clamp(16px, 1.8vw, 28px);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   color-scheme: light;
 }
 
-.dark {
-  --pf-paper: #121110;
-  --pf-paper-soft: #1b1a18;
-  --pf-ink: #f3f1ec;
-  --pf-ink-soft: #a8a49b;
-  --pf-line: #302e2a;
-  --pf-line-strong: #47443e;
-  --pf-overlay: rgb(0 0 0 / 65%);
-  color-scheme: dark;
-}
-
 @theme inline {
-  --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-ibm-plex-mono), ui-monospace, "SFMono-Regular", monospace;
+  --font-sans: var(--font-literata), Georgia, serif;
+  --font-display: var(--font-rokkitt), "Rockwell", serif;
 
-  --color-paper: var(--pf-paper);
-  --color-paper-soft: var(--pf-paper-soft);
-  --color-ink: var(--pf-ink);
-  --color-ink-soft: var(--pf-ink-soft);
-  --color-line: var(--pf-line);
-  --color-line-strong: var(--pf-line-strong);
-  --color-overlay: var(--pf-overlay);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-field-1: var(--field-1);
+  --color-field-2: var(--field-2);
+  --color-field-3: var(--field-3);
+  --color-field-4: var(--field-4);
+  --color-field-4-ink: var(--field-4-ink);
+  --color-field-1-ink: var(--field-1-ink);
 }
 
 html {
-  background-color: var(--pf-paper);
-  color: var(--pf-ink);
+  background-color: var(--bg);
+  color: var(--ink);
 }
 
 body {
-  min-height: 100vh;
-  background-color: var(--pf-paper);
-  color: var(--pf-ink);
+  min-height: 100svh;
+  background-color: var(--bg);
+  color: var(--ink);
   font-family: var(--font-sans);
+  font-size: var(--step-body);
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
 
-* {
-  border-color: var(--pf-line);
+.font-display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 0.85;
+}
+
+.wrap {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 1440px;
+  padding-inline: var(--margin);
 }
 
 ::selection {
-  background-color: var(--pf-ink);
-  color: var(--pf-paper);
+  background-color: var(--accent);
+  color: var(--accent-ink);
 }
 
-.no-scrollbar {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
 }
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
+
+/* Section-part entrance: heading, then text, then picture. Content is visible
+   by default; the script only adds .is-armed once it can play it back. */
+.rise {
+  transition:
+    opacity 0.8s var(--ease-out),
+    transform 0.8s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 75ms);
+}
+.is-armed .rise:not(.is-in) {
+  opacity: 0;
+  transform: translateY(24px);
 }
 
 @keyframes pf-fade-up {
@@ -79,14 +116,36 @@ body {
 }
 
 .pf-reveal {
-  animation: pf-fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: pf-fade-up 0.7s var(--ease-out) both;
+}
+
+@keyframes drift {
+  from {
+    transform: scale(1.04) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.1) translate3d(-1.5%, -1%, 0);
+  }
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pf-reveal {
-    animation-duration: 0.01ms !important;
+  footer.curtain {
+    position: relative;
   }
-  * {
+  .is-armed .rise:not(.is-in) {
+    opacity: 1;
+    transform: none;
+  }
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

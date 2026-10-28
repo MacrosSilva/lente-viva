@@ -35,21 +35,21 @@ export function ContactForm() {
   };
 
   const inputClass =
-    "w-full rounded-md border border-line bg-paper px-4 py-3 text-sm text-ink placeholder:text-ink-soft/60 transition-colors focus:border-ink focus:outline-none";
-  const labelClass = "text-[13px] font-medium text-ink";
-  const errorClass = "mt-1.5 text-[13px] text-red-600 dark:text-red-400";
+    "h-[54px] w-full bg-paper px-4 text-[length:var(--step-body)] text-ink placeholder:text-muted transition-[background-color] focus:bg-white focus:outline-none";
+  const labelClass = "text-[length:var(--step-small)] font-medium text-ink";
+  const errorClass = "mt-1.5 text-[length:var(--step-small)] text-[#7a1f12]";
 
   if (status === "success") {
     return (
-      <div className="rounded-md border border-line bg-paper-soft px-6 py-10 text-center" role="status">
-        <p className="text-lg font-medium tracking-tight text-ink">Mensagem enviada.</p>
-        <p className="mt-2 text-sm text-ink-soft">
+      <div className="bg-paper px-6 py-10 text-center" role="status">
+        <p className="font-display text-[length:var(--step-lead)]">Mensagem enviada.</p>
+        <p className="mt-2">
           Obrigado pelo contato. Normalmente respondo em até dois dias úteis.
         </p>
         <button
           type="button"
           onClick={() => setStatus("idle")}
-          className="mt-6 text-sm font-medium text-ink underline underline-offset-4 hover:opacity-70"
+          className="mt-6 font-medium text-ink underline underline-offset-4 hover:opacity-70"
         >
           Enviar outra mensagem
         </button>
@@ -104,7 +104,7 @@ export function ContactForm() {
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="phone" className={labelClass}>
-            Telefone <span className="text-ink-soft">(opcional)</span>
+            Telefone <span className="text-muted">(opcional)</span>
           </label>
           <input
             id="phone"
@@ -153,7 +153,7 @@ export function ContactForm() {
           rows={5}
           aria-invalid={!!errors.message}
           aria-describedby={errors.message ? "message-error" : undefined}
-          className={`mt-2 resize-none ${inputClass}`}
+          className={`mt-2 h-auto resize-none py-3 ${inputClass}`}
           {...register("message")}
         />
         {errors.message && (
@@ -164,7 +164,7 @@ export function ContactForm() {
       </div>
 
       {status === "error" && (
-        <p role="alert" className="text-[13px] text-red-600 dark:text-red-400">
+        <p role="alert" className={errorClass}>
           Não foi possível enviar sua mensagem agora. Tente novamente em instantes.
         </p>
       )}
@@ -172,7 +172,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-medium text-paper transition-transform active:scale-[0.98] disabled:opacity-60"
+        className="inline-flex h-14 items-center bg-ink px-8 font-semibold text-bg transition-[transform,background-color] hover:bg-[#2b350b] active:scale-[0.98] disabled:opacity-60"
       >
         {status === "submitting" ? "Enviando…" : "Enviar mensagem"}
       </button>

@@ -1,77 +1,66 @@
 import type { Metadata } from "next";
 
 import { ContactForm } from "@/components/site/contact-form";
-import { Photo } from "@/components/site/photo";
-import { Reveal } from "@/components/site/reveal";
+import { ContactStrip } from "@/components/site/contact-strip";
+import { PaperHero } from "@/components/site/paper-hero";
 
 export const metadata: Metadata = {
   title: "Contato · Lente Viva",
   description: "Fale sobre seu projeto de fotografia.",
 };
 
+const INFO = [
+  {
+    label: "Email",
+    value: (
+      <a href="mailto:contato@lenteviva.com.br" className="underline underline-offset-4 hover:opacity-70">
+        contato@lenteviva.com.br
+      </a>
+    ),
+  },
+  {
+    label: "Telefone",
+    value: (
+      <a href="tel:+5511999990000" className="underline underline-offset-4 hover:opacity-70">
+        +55 11 99999-0000
+      </a>
+    ),
+  },
+  { label: "Atendimento", value: "São Paulo e viagens sob consulta" },
+  { label: "Prazo de resposta", value: "Até dois dias úteis" },
+];
+
 export default function ContatoPage() {
   return (
     <main>
-      <section className="relative flex h-[42vh] min-h-[320px] items-end overflow-hidden bg-ink">
-        <Photo
-          id="1519085360753-af0119f7cbe7"
-          alt="Retrato em luz suave"
-          sizes="100vw"
-          priority
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/35" />
-        <div className="relative mx-auto w-full max-w-6xl px-5 pb-12 pt-28 sm:px-8">
-          <Reveal>
-            <h1 className="text-4xl font-semibold tracking-tighter text-white md:text-5xl">
-              Contato
-            </h1>
-            <p className="mt-3 max-w-md text-base text-white/75">
-              Conte a data, o lugar e a ideia do seu projeto.
-            </p>
-          </Reveal>
-        </div>
-      </section>
+      <PaperHero
+        photo={{ id: "1519085360753-af0119f7cbe7", alt: "Perfil iluminado pelo entardecer" }}
+        title="Contato"
+        lead="Conte a data, o lugar e a ideia. Eu respondo com a hora de luz que escolheria."
+      />
 
-      <section className="px-5 py-16 sm:px-8">
-        <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] lg:gap-20">
-          <Reveal>
-            <p className="font-mono text-xs uppercase tracking-[0.14em] text-ink-soft">
-              Informações
-            </p>
-            <dl className="mt-5 space-y-6">
-              <div>
-                <dt className="text-sm text-ink-soft">Email</dt>
-                <dd className="mt-1 text-base text-ink">
-                  <a href="mailto:contato@lenteviva.com.br" className="hover:opacity-70">
-                    contato@lenteviva.com.br
-                  </a>
-                </dd>
-              </div>
-              <div>
-                <dt className="text-sm text-ink-soft">Telefone</dt>
-                <dd className="mt-1 text-base text-ink">
-                  <a href="tel:+5511999990000" className="hover:opacity-70">
-                    +55 11 99999-0000
-                  </a>
-                </dd>
-              </div>
-              <div>
-                <dt className="text-sm text-ink-soft">Atendimento</dt>
-                <dd className="mt-1 text-base text-ink">São Paulo e viagens sob consulta</dd>
-              </div>
-              <div>
-                <dt className="text-sm text-ink-soft">Prazo de resposta</dt>
-                <dd className="mt-1 text-base text-ink">Até dois dias úteis</dd>
-              </div>
+      <section aria-labelledby="pedido" className="py-[clamp(80px,10vw,160px)]">
+        <div className="wrap grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <h2 id="pedido" className="rise font-display text-[length:var(--step-head)]">
+              Fale comigo
+            </h2>
+            <dl className="rise mt-10 space-y-6" style={{ ["--i" as string]: 1 }}>
+              {INFO.map((item) => (
+                <div key={item.label}>
+                  <dt className="text-[length:var(--step-small)] text-muted">{item.label}</dt>
+                  <dd className="mt-1">{item.value}</dd>
+                </div>
+              ))}
             </dl>
-          </Reveal>
+          </div>
 
-          <Reveal delay={100}>
+          <div className="rise bg-field-2 p-6 sm:p-10 lg:col-span-6 lg:col-start-7" style={{ ["--i" as string]: 2 }}>
             <ContactForm />
-          </Reveal>
+          </div>
         </div>
       </section>
+      <ContactStrip slugs={["luz-natural", "casamento-ana-e-pedro", "colecao-verao", "serra-da-bocaina"]} heading="Uma hora para cada pedido" />
     </main>
   );
 }

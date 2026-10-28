@@ -21,7 +21,7 @@ export function Photo({ id, alt, sizes, priority = false, className }: PhotoProp
   if (failed) {
     return (
       <div
-        className={`bg-paper-soft ${className ?? ""}`}
+        className={`bg-paper-2 ${className ?? ""}`}
         role="img"
         aria-label={alt}
       />
